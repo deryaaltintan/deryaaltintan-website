@@ -511,6 +511,54 @@ nav{gap:14px!important;font-size:14px!important}
 }
 </style>
 
+
+<style id="final-course-layout-2350">
+/* Public course information now uses the full page width. */
+.coursepage .coursecols.course-public-only{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+}
+.coursepage .coursecols.course-public-only .courseinfo{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+}
+
+/* The five compact facts fill the width instead of leaving the right side empty. */
+.coursepage .coursecols.course-public-only .syllabusgrid{
+  width:100%!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:12px!important;
+}
+
+/* Objective / outcomes / content / references stretch across the page. */
+.coursepage .coursecols.course-public-only .courseinfo>h3,
+.coursepage .coursecols.course-public-only .courseinfo>h3 + p,
+.coursepage .coursecols.course-public-only .courseinfo>h3 + ul{
+  width:100%!important;
+  max-width:none!important;
+}
+
+/* Graceful narrowing on smaller screens. */
+@media(max-width:1450px){
+  .coursepage .coursecols.course-public-only .syllabusgrid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:980px){
+  .coursepage .coursecols.course-public-only .syllabusgrid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:700px){
+  .coursepage .coursecols.course-public-only .syllabusgrid{
+    grid-template-columns:1fr!important;
+  }
+}
+</style>
+
 </head><body><div aria-hidden="true" class="motion-layer motion-stars"></div><div aria-hidden="true" class="motion-layer motion-geometry"></div><div aria-hidden="true" class="motion-glow"></div>
 <svg aria-hidden="true" class="math-motion" preserveaspectratio="xMidYMid slice" viewbox="0 0 1440 900">
 <path class="network" d="M80 180 C260 70 430 250 610 130 S980 210 1350 95"></path>
@@ -640,7 +688,7 @@ nav{gap:14px!important;font-size:14px!important}
 <section class="sitepage" id="teachingPage"><div class="pagewrap"><h1 data-en="Teaching" data-tr="Dersler">Teaching</h1><div class="goldline"></div><p class="pageintro" data-en="Current courses and downloadable course materials. Lecture notes are organized inside each course rather than as a separate top-level menu." data-tr="Güncel dersler ve indirilebilir ders materyalleri. Ders notları ayrı bir üst menü yerine ilgili dersin kendi sayfasında düzenlenmiştir.">Current courses and downloadable course materials. Lecture notes are organized inside each course rather than as a separate top-level menu.</p><div class="teachgrid">
 <article class="coursecard"><div class="eyebrow" data-en="MAT123 · Hacettepe University" data-tr="MAT123 · Hacettepe Üniversitesi">MAT123 · Hacettepe University</div><h2 data-en="Mathematics I" data-tr="Matematik I">Mathematics I</h2><p data-en="General information, lecture notes, exercise sheets, exams, assignments and announcements." data-tr="Genel bilgiler, ders notları, alıştırma föyleri, sınavlar, ödevler ve duyurular.">General information, lecture notes, exercise sheets, exams, assignments and announcements.</p><a class="coursebtn" data-en="Course Page →" data-tr="Ders Sayfası →" href="#mat123">Course Page →</a></article>
 <article class="coursecard"><div class="eyebrow" data-en="MAT124 · Hacettepe University" data-tr="MAT124 · Hacettepe Üniversitesi">MAT124 · Hacettepe University</div><h2 data-en="Mathematics II" data-tr="Matematik II">Mathematics II</h2><p data-en="General information, lecture notes, exercise sheets, exams, assignments and announcements." data-tr="Genel bilgiler, ders notları, alıştırma föyleri, sınavlar, ödevler ve duyurular.">General information, lecture notes, exercise sheets, exams, assignments and announcements.</p><a class="coursebtn" data-en="Course Page →" data-tr="Ders Sayfası →" href="#mat124">Course Page →</a></article>
-<article class="coursecard"><div class="eyebrow" data-en="Türkiye–Azerbaijan University" data-tr="Türkiye–Azerbaycan Üniversitesi">Türkiye–Azerbaijan University</div><h2 data-en="Differential Equations" data-tr="Diferansiyel Denklemler">Differential Equations</h2><p data-en="Course objectives and outcomes, lecture notes, Laplace transform table, exams, assignments and announcements." data-tr="Ders amaçları ve öğrenme çıktıları, ders notları, Laplace dönüşüm tablosu, sınavlar, ödevler ve duyurular.">Course objectives and outcomes, lecture notes, Laplace transform table, exams, assignments and announcements.</p><a class="coursebtn" data-en="Course Page →" data-tr="Ders Sayfası →" href="#diffeq">Course Page →</a></article>
+<article class="coursecard"><div class="eyebrow" data-en="Türkiye–Azerbaijan University" data-tr="Türkiye–Azerbaycan Üniversitesi">Türkiye–Azerbaijan University</div><h2 data-en="Differential Equations" data-tr="Diferansiyel Denklemler">Differential Equations</h2><p data-en="General information, lecture notes, exams, assignments and announcements." data-tr="Genel bilgiler, ders notları, sınavlar, ödevler ve duyurular.">General information, lecture notes, exams, assignments and announcements.</p><a class="coursebtn" data-en="Course Page →" data-tr="Ders Sayfası →" href="#diffeq">Course Page →</a></article>
 </div><div class="securitynote" data-en="Course passwords will be configured at the hosting level. They are not embedded in this HTML file." data-tr="Ders şifreleri yayınlama aşamasında sunucu düzeyinde yapılandırılacaktır; bu HTML dosyasına gömülmemiştir.">Course passwords will be configured at the hosting level. They are not embedded in this HTML file.</div></div></section>
 <section class="sitepage coursepage" id="mat123"><div class="pagewrap"><a class="back" data-en="← Back to Teaching" data-tr="← Derslere Dön" href="#teachingPage">← Back to Teaching</a><div class="coursehero"><div><div class="eyebrow" data-en="2026–2027 · Hacettepe University" data-tr="2026–2027 · Hacettepe Üniversitesi">2026–2027 · Hacettepe University</div><h1 data-en="MAT123 | Mathematics I (Calculus I)" data-tr="MAT123 | Matematik I (Calculus I)">MAT123 | Mathematics I (Calculus I)</h1><div class="huzem-access-row"><a class="huzem-link" data-en="HUZEM / HADİ Course Page ↗" data-tr="HUZEM / HADİ Ders Sayfası ↗" href="https://hadi.hacettepe.edu.tr/" rel="noopener noreferrer" target="_blank">HUZEM / HADİ Course Page ↗</a></div></div><a class="lockpill material-entry" data-en="🔒 Open Course Materials" data-tr="🔒 Ders Materyallerini Aç" href="/materials/mat123/index.html">🔒 Open Course Materials</a><div aria-hidden="true" class="course-math-art"><div class="formula">f′(x) = lim  [f(x+h) − f(x)] / h</div><div class="math-accent" data-en="Limits · Derivatives · Integrals" data-tr="Limitler · Türevler · İntegraller">Limits · Derivatives · Integrals</div><div class="curve"></div></div></div><div class="coursecols course-public-only"><article class="courseinfo"><div class="syllabusgrid">
 <div><b data-en="Course type" data-tr="Ders türü">Course type</b><span data-en="Compulsory" data-tr="Zorunlu">Compulsory</span></div><div><b data-en="Prerequisite(s)" data-tr="Ön koşul(lar)">Prerequisite(s)</b><span data-en="None" data-tr="Yok">None</span></div><div><b data-en="Co-requisite(s)" data-tr="Eş koşul(lar)">Co-requisite(s)</b><span data-en="None" data-tr="Yok">None</span></div><div><b data-en="Mode" data-tr="Öğretim şekli">Mode</b><span data-en="Face-to-face" data-tr="Yüz yüze">Face-to-face</span></div><div><b data-en="Teaching methods" data-tr="Öğretim yöntemleri">Teaching methods</b><span data-en="Lecture, discussion, question–answer" data-tr="Ders anlatımı, tartışma, soru–cevap">Lecture, discussion, question–answer</span></div></div>
