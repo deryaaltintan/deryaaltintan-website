@@ -475,7 +475,77 @@ body.night-theme #diffeq .courseinfo:before{background:linear-gradient(100deg,#1
 #diffeq .diff-summary-band{display:block;padding:18px 20px;margin-bottom:16px;border-radius:18px;background:linear-gradient(100deg,#edf6ff,#f6efff);color:#436096;font-weight:800;letter-spacing:.02em;border:1px solid #e0e7f2}
 body.night-theme #diffeq .diff-summary-band{background:linear-gradient(100deg,rgba(39,90,130,.32),rgba(100,64,150,.28));color:#d8e8ff;border-color:rgba(169,196,255,.18)}
 .coursepage .filelink .file-label{color:inherit!important;font:inherit!important;font-weight:inherit!important}
-</style></head><body><div aria-hidden="true" class="motion-layer motion-stars"></div><div aria-hidden="true" class="motion-layer motion-geometry"></div><div aria-hidden="true" class="motion-glow"></div>
+</style>
+<style id="live-width-cv-fix">
+html,body{max-width:100%;overflow-x:hidden}
+body,header,#home{min-width:0!important}
+
+header{
+  width:100%;
+  padding-left:28px!important;
+  padding-right:28px!important;
+  gap:24px!important
+}
+.brand{font-size:35px!important}
+nav{
+  gap:20px!important;
+  font-size:15px!important;
+  min-width:0
+}
+.tools{
+  flex:0 0 auto;
+  gap:10px!important
+}
+
+#home{
+  width:100%;
+  max-width:1500px!important;
+  padding-left:42px!important;
+  padding-right:42px!important;
+  grid-template-columns:470px minmax(0,1fr)!important;
+  gap:44px!important
+}
+.homeright,.bio,.pagewrap{min-width:0}
+.bio{max-width:850px!important}
+
+body.night-theme .cvbutton,
+body.night-mode .cvbutton,
+body.dark-mode .cvbutton,
+body[data-theme="dark"] .cvbutton{
+  background:#f7fbff!important;
+  color:#12365a!important;
+  border-color:#8fb7ff!important;
+  font-weight:700!important
+}
+
+body.night-theme .cvbutton:hover,
+body.night-mode .cvbutton:hover,
+body.dark-mode .cvbutton:hover,
+body[data-theme="dark"] .cvbutton:hover{
+  background:#fff!important;
+  color:#0b2f55!important
+}
+
+@media(max-width:1600px){
+  header{
+    padding-left:22px!important;
+    padding-right:22px!important;
+    gap:18px!important
+  }
+  .brand{font-size:31px!important}
+  nav{
+    gap:14px!important;
+    font-size:14px!important
+  }
+  .tools{font-size:14px!important}
+  #home{
+    grid-template-columns:430px minmax(0,1fr)!important;
+    gap:36px!important
+  }
+}
+</style>
+
+</head><body><div aria-hidden="true" class="motion-layer motion-stars"></div><div aria-hidden="true" class="motion-layer motion-geometry"></div><div aria-hidden="true" class="motion-glow"></div>
 <svg aria-hidden="true" class="math-motion" preserveaspectratio="xMidYMid slice" viewbox="0 0 1440 900">
 <path class="network" d="M80 180 C260 70 430 250 610 130 S980 210 1350 95"></path>
 <path class="network alt" d="M40 690 C260 540 410 760 650 610 S1050 700 1400 520"></path>
