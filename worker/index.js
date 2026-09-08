@@ -96,17 +96,17 @@ function loginPage(course, returnTo, lang, wrong = false) {
 <style>
 :root{--bg:#071b31;--panel:#0d2d4a;--text:#f5f8ff;--muted:#b4c7de;--violet:#7e56ff;--blue:#4778ff;--line:#365f8e}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;padding:28px;background:linear-gradient(135deg,#07192c,#092743);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
-.card{width:min(920px,100%);border:1px solid var(--line);border-radius:34px;padding:58px 68px;background:rgba(10,43,70,.94);box-shadow:0 24px 70px rgba(0,0,0,.22)}
-.code{font-size:1.1rem;font-weight:900;letter-spacing:.06em;color:#b59cff;margin-bottom:18px}
-h1{font:700 clamp(2.25rem,5vw,4.2rem)/1.03 Georgia,"Times New Roman",serif;margin:0 0 22px}
-p{font-size:1.32rem;line-height:1.55;color:#d3e0ef;margin:0 0 38px}
-label{display:block;font-size:1.2rem;font-weight:900;margin-bottom:12px}
-input{width:100%;font-size:1.25rem;padding:21px 24px;border-radius:18px;border:2px solid #779aff;background:#09243d;color:white;outline:none;box-shadow:0 0 0 6px rgba(81,112,220,.18)}
-button{width:100%;border:0;border-radius:18px;margin-top:28px;padding:22px 24px;color:white;font-size:1.25rem;font-weight:900;cursor:pointer;background:linear-gradient(90deg,var(--blue),var(--violet))}
-.small{font-size:1rem;color:var(--muted);margin:26px 0 0}
-.error{font-size:1rem;color:#ffd2dc;margin:16px 0 0;font-weight:800}
-@media(max-width:700px){.card{padding:34px 24px;border-radius:24px}p{font-size:1.05rem}}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#07192c,#092743);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
+.card{width:min(720px,100%);border:1px solid var(--line);border-radius:28px;padding:42px 48px;background:rgba(10,43,70,.94);box-shadow:0 22px 60px rgba(0,0,0,.20)}
+.code{font-size:.95rem;font-weight:900;letter-spacing:.06em;color:#b59cff;margin-bottom:14px}
+h1{font:700 clamp(1.8rem,3.2vw,2.8rem)/1.08 Georgia,"Times New Roman",serif;margin:0 0 16px}
+p{font-size:1.05rem;line-height:1.5;color:#d3e0ef;margin:0 0 28px}
+label{display:block;font-size:1rem;font-weight:900;margin-bottom:9px}
+input{width:100%;font-size:1.05rem;padding:15px 17px;border-radius:14px;border:2px solid #779aff;background:#09243d;color:white;outline:none;box-shadow:0 0 0 4px rgba(81,112,220,.16)}
+button{width:100%;border:0;border-radius:14px;margin-top:20px;padding:16px 18px;color:white;font-size:1.05rem;font-weight:900;cursor:pointer;background:linear-gradient(90deg,var(--blue),var(--violet))}
+.small{font-size:.9rem;color:var(--muted);margin:20px 0 0}
+.error{font-size:.92rem;color:#ffd2dc;margin:13px 0 0;font-weight:800}
+@media(max-width:700px){body{padding:18px}.card{padding:30px 22px;border-radius:22px}h1{font-size:1.9rem}p{font-size:1rem;margin-bottom:24px}}
 </style>
 </head>
 <body>
