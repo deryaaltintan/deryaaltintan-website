@@ -96,17 +96,17 @@ function loginPage(course, returnTo, lang, wrong = false) {
 <style>
 :root{--bg:#071b31;--panel:#0d2d4a;--text:#f5f8ff;--muted:#b4c7de;--violet:#7e56ff;--blue:#4778ff;--line:#365f8e}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#07192c,#092743);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
-.card{width:min(720px,100%);border:1px solid var(--line);border-radius:28px;padding:42px 48px;background:rgba(10,43,70,.94);box-shadow:0 22px 60px rgba(0,0,0,.20)}
-.code{font-size:.95rem;font-weight:900;letter-spacing:.06em;color:#b59cff;margin-bottom:14px}
-h1{font:700 clamp(1.8rem,3.2vw,2.8rem)/1.08 Georgia,"Times New Roman",serif;margin:0 0 16px}
-p{font-size:1.05rem;line-height:1.5;color:#d3e0ef;margin:0 0 28px}
-label{display:block;font-size:1rem;font-weight:900;margin-bottom:9px}
-input{width:100%;font-size:1.05rem;padding:15px 17px;border-radius:14px;border:2px solid #779aff;background:#09243d;color:white;outline:none;box-shadow:0 0 0 4px rgba(81,112,220,.16)}
-button{width:100%;border:0;border-radius:14px;margin-top:20px;padding:16px 18px;color:white;font-size:1.05rem;font-weight:900;cursor:pointer;background:linear-gradient(90deg,var(--blue),var(--violet))}
-.small{font-size:.9rem;color:var(--muted);margin:20px 0 0}
-.error{font-size:.92rem;color:#ffd2dc;margin:13px 0 0;font-weight:800}
-@media(max-width:700px){body{padding:18px}.card{padding:30px 22px;border-radius:22px}h1{font-size:1.9rem}p{font-size:1rem;margin-bottom:24px}}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#07192c,#092743);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
+.card{width:min(520px,100%);border:1px solid var(--line);border-radius:22px;padding:28px 32px;background:rgba(10,43,70,.94);box-shadow:0 18px 48px rgba(0,0,0,.18)}
+.code{font-size:.78rem;font-weight:900;letter-spacing:.06em;color:#b59cff;margin-bottom:10px}
+h1{font:700 clamp(1.45rem,2.2vw,2rem)/1.08 Georgia,"Times New Roman",serif;margin:0 0 12px}
+p{font-size:.92rem;line-height:1.45;color:#d3e0ef;margin:0 0 20px}
+label{display:block;font-size:.88rem;font-weight:900;margin-bottom:7px}
+input{width:100%;font-size:.95rem;padding:11px 13px;border-radius:11px;border:2px solid #779aff;background:#09243d;color:white;outline:none;box-shadow:0 0 0 3px rgba(81,112,220,.14)}
+button{width:100%;border:0;border-radius:11px;margin-top:15px;padding:12px 14px;color:white;font-size:.92rem;font-weight:900;cursor:pointer;background:linear-gradient(90deg,var(--blue),var(--violet))}
+.small{font-size:.78rem;color:var(--muted);margin:15px 0 0}
+.error{font-size:.8rem;color:#ffd2dc;margin:10px 0 0;font-weight:800}
+@media(max-width:600px){body{padding:16px}.card{width:min(460px,100%);padding:24px 20px;border-radius:18px}h1{font-size:1.55rem}p{font-size:.9rem}}
 </style>
 </head>
 <body>
