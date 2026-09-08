@@ -789,6 +789,18 @@ nav{gap:14px!important;font-size:14px!important}
   ['langEN','langTR'].forEach(id=>{const b=document.getElementById(id); if(b)b.addEventListener('click',()=>setTimeout(renderAll,0));});
 })();
 </script>
+
+<script id="protected-material-language-fix">
+document.addEventListener("click", function (e) {
+  const a = e.target.closest("a.material-entry");
+  if (!a) return;
+  const lang = localStorage.getItem("derya-lang") === "tr" ? "tr" : "en";
+  const u = new URL(a.href, window.location.origin);
+  u.searchParams.set("lang", lang);
+  a.href = u.pathname + u.search;
+});
+</script>
+
 </body></html><style id="fresh-palette-override">
 /* Fresh, cohesive academic palette — muted navy, powder blue, sea-glass and lavender */
 :root{
