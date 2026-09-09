@@ -621,6 +621,52 @@ nav{gap:14px!important;font-size:14px!important}
 }
 </style>
 
+
+<style id="desktop-global-justify">
+/* Desktop/tablet: paragraph-style text aligned on both left and right edges.
+   Mobile remains left-aligned for readability. */
+@media (min-width: 901px) {
+  p,
+  .courseinfo,
+  .course-description,
+  .course-content,
+  .description,
+  .desc,
+  .summary,
+  .abstract,
+  .bio,
+  .biography,
+  .project-description,
+  .talk-description,
+  .grant-description,
+  .announcement-text {
+    text-align: justify !important;
+    text-justify: inter-word;
+    hyphens: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  p,
+  .courseinfo,
+  .course-description,
+  .course-content,
+  .description,
+  .desc,
+  .summary,
+  .abstract,
+  .bio,
+  .biography,
+  .project-description,
+  .talk-description,
+  .grant-description,
+  .announcement-text {
+    text-align: left !important;
+    hyphens: none;
+  }
+}
+</style>
+
 </head><body><div aria-hidden="true" class="motion-layer motion-stars"></div><div aria-hidden="true" class="motion-layer motion-geometry"></div><div aria-hidden="true" class="motion-glow"></div>
 <svg aria-hidden="true" class="math-motion" preserveaspectratio="xMidYMid slice" viewbox="0 0 1440 900">
 <path class="network" d="M80 180 C260 70 430 250 610 130 S980 210 1350 95"></path>
