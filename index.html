@@ -834,6 +834,54 @@ body.night-theme .edu-years{color:#b7cbe0}
 }
 </style>
 
+
+<style id="education-cap-svg-final">
+/* Education icons: custom line-art graduation caps */
+.cap-v2{
+  display:grid!important;
+  place-items:center!important;
+  padding:0!important;
+}
+.cap-v2 svg{
+  width:37px!important;
+  height:37px!important;
+  display:block!important;
+}
+.cap-blue{
+  color:#2563eb!important;
+  background:#eef5ff!important;
+}
+.cap-purple{
+  color:#7c3aed!important;
+  background:#f3edff!important;
+}
+.cap-teal{
+  color:#0f8e8a!important;
+  background:#e8fbfa!important;
+}
+
+/* Night mode: keep the cap bright enough against navy */
+body.night-theme .cap-blue{
+  color:#72a7ff!important;
+  background:rgba(37,99,235,.18)!important;
+}
+body.night-theme .cap-purple{
+  color:#c0a0ff!important;
+  background:rgba(124,58,237,.19)!important;
+}
+body.night-theme .cap-teal{
+  color:#63ddd6!important;
+  background:rgba(15,142,138,.18)!important;
+}
+
+@media(max-width:520px){
+  .cap-v2 svg{
+    width:35px!important;
+    height:35px!important;
+  }
+}
+</style>
+
 </head><body><div aria-hidden="true" class="motion-layer motion-stars"></div><div aria-hidden="true" class="motion-layer motion-geometry"></div><div aria-hidden="true" class="motion-glow"></div>
 <svg aria-hidden="true" class="math-motion" preserveaspectratio="xMidYMid slice" viewbox="0 0 1440 900">
 <path class="network" d="M80 180 C260 70 430 250 610 130 S980 210 1350 95"></path>
@@ -1032,7 +1080,12 @@ body.night-theme .edu-years{color:#b7cbe0}
     <div class="smallline"></div>
 
     <div class="edu-item edu-v2">
-      <div class="cap cap-v2 cap-blue">🎓</div>
+      <div class="cap cap-v2 cap-blue"><svg viewBox="0 0 64 64" aria-hidden="true">
+  <path d="M8 24 32 13l24 11-24 11L8 24Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M18 31v10c0 5 7 10 14 10s14-5 14-10V31" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  <path d="M56 24v15" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="56" cy="42" r="3" fill="currentColor"/>
+</svg></div>
       <div>
         <div class="edu-title" data-en="Ph.D. in Scientific Computing" data-tr="Ph.D. Bilimsel Hesaplama">Ph.D. in Scientific Computing</div>
         <div class="edu-years">2006–2011</div>
@@ -1041,7 +1094,12 @@ body.night-theme .edu-years{color:#b7cbe0}
     </div>
 
     <div class="edu-item edu-v2">
-      <div class="cap cap-v2 cap-purple">🎓</div>
+      <div class="cap cap-v2 cap-purple"><svg viewBox="0 0 64 64" aria-hidden="true">
+  <path d="M8 24 32 13l24 11-24 11L8 24Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M18 31v10c0 5 7 10 14 10s14-5 14-10V31" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  <path d="M56 24v15" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="56" cy="42" r="3" fill="currentColor"/>
+</svg></div>
       <div>
         <div class="edu-title" data-en="M.Sc. in Scientific Computing" data-tr="M.Sc. Bilimsel Hesaplama">M.Sc. in Scientific Computing</div>
         <div class="edu-years">2003–2006</div>
@@ -1050,7 +1108,12 @@ body.night-theme .edu-years{color:#b7cbe0}
     </div>
 
     <div class="edu-item edu-v2">
-      <div class="cap cap-v2 cap-teal">🎓</div>
+      <div class="cap cap-v2 cap-teal"><svg viewBox="0 0 64 64" aria-hidden="true">
+  <path d="M8 24 32 13l24 11-24 11L8 24Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M18 31v10c0 5 7 10 14 10s14-5 14-10V31" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  <path d="M56 24v15" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="56" cy="42" r="3" fill="currentColor"/>
+</svg></div>
       <div>
         <div class="edu-title" data-en="B.Sc. in Mathematics" data-tr="B.Sc. Matematik">B.Sc. in Mathematics</div>
         <div class="edu-years">1999–2003</div>
