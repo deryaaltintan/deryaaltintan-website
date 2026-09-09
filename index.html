@@ -622,49 +622,27 @@ nav{gap:14px!important;font-size:14px!important}
 </style>
 
 
-<style id="desktop-global-justify">
-/* Desktop/tablet: paragraph-style text aligned on both left and right edges.
-   Mobile remains left-aligned for readability. */
-@media (min-width: 901px) {
-  p,
-  .courseinfo,
-  .course-description,
-  .course-content,
-  .description,
-  .desc,
-  .summary,
-  .abstract,
-  .bio,
-  .biography,
-  .project-description,
-  .talk-description,
-  .grant-description,
-  .announcement-text {
-    text-align: justify !important;
-    text-justify: inter-word;
-    hyphens: auto;
-  }
+<style id="global-justify-final">
+/* Long-form text: fully justified in both EN and TR */
+.bio p,
+.coursecard p,
+.courseinfo p,
+.info-card p,
+.announcement-card p,
+.contactcard p,
+.pageintro,
+.project-description,
+.talk-description,
+.grant-description,
+.description,
+.summary,
+.abstract {
+  text-align: justify !important;
+  text-align-last: left !important;
+  text-justify: inter-word;
 }
 
-@media (max-width: 900px) {
-  p,
-  .courseinfo,
-  .course-description,
-  .course-content,
-  .description,
-  .desc,
-  .summary,
-  .abstract,
-  .bio,
-  .biography,
-  .project-description,
-  .talk-description,
-  .grant-description,
-  .announcement-text {
-    text-align: left !important;
-    hyphens: none;
-  }
-}
+/* Keep short UI text, titles, buttons and labels untouched */
 </style>
 
 </head><body><div aria-hidden="true" class="motion-layer motion-stars"></div><div aria-hidden="true" class="motion-layer motion-geometry"></div><div aria-hidden="true" class="motion-glow"></div>
@@ -907,6 +885,26 @@ document.addEventListener("click", function (e) {
   u.searchParams.set("lang", lang);
   a.href = u.pathname + u.search;
 });
+</script>
+
+
+<script id="global-justify-js">
+(function () {
+  function applyJustify() {
+    document.querySelectorAll(
+      '.bio p, .coursecard p, .courseinfo p, .info-card p, .announcement-card p, .contactcard p, .pageintro, .project-description, .talk-description, .grant-description, .description, .summary, .abstract'
+    ).forEach(function (el) {
+      el.style.setProperty('text-align', 'justify', 'important');
+      el.style.setProperty('text-align-last', 'left', 'important');
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', applyJustify);
+  document.addEventListener('click', function () {
+    setTimeout(applyJustify, 0);
+  });
+  window.addEventListener('hashchange', applyJustify);
+})();
 </script>
 
 </body></html><style id="fresh-palette-override">
