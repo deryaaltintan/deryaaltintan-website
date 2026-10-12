@@ -1,7 +1,9 @@
+
 const COURSES = {
   mat123: { prefix: "/materials/mat123/", secret: "MAT123_PASSWORD", title: "MAT123" },
   mat124: { prefix: "/materials/mat124/", secret: "MAT124_PASSWORD", title: "MAT124" },
-  diff: { prefix: "/materials/diff/", secret: "DIFF_PASSWORD", title: "Differential Equations" }
+  diff: { prefix: "/materials/diff/", secret: "DIFF_PASSWORD", title: "Differential Equations" },
+  mtk477: { prefix: "/materials/mtk477/", secret: "MTK477_PASSWORD", title: "MTK477" }
 };
 
 const SESSION_SECONDS = 8 * 60 * 60;
