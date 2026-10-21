@@ -43,20 +43,9 @@ data-tr="Bu dersin tüm korumalı materyalleri bu sayfada toplanmıştır. Açı
 </header>
 <main class="grid">
 <section class="group"><h2 data-en="Lecture Notes" data-tr="Ders Notları">Lecture Notes</h2>
-<div class="filelink pending"><span class="label" data-en="Week 1" data-tr="Hafta 1">Week 1</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 2" data-tr="Hafta 2">Week 2</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 3" data-tr="Hafta 3">Week 3</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 4" data-tr="Hafta 4">Week 4</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 5" data-tr="Hafta 5">Week 5</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 6" data-tr="Hafta 6">Week 6</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 7" data-tr="Hafta 7">Week 7</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 8" data-tr="Hafta 8">Week 8</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 9" data-tr="Hafta 9">Week 9</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 10" data-tr="Hafta 10">Week 10</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 11" data-tr="Hafta 11">Week 11</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 12" data-tr="Hafta 12">Week 12</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
-<div class="filelink pending"><span class="label" data-en="Week 13" data-tr="Hafta 13">Week 13</span><span class="pending-label" data-en="Coming soon" data-tr="Hazırlanıyor">Coming soon</span></div>
+<div id="weekly-files" aria-live="polite"></div>
 </section>
+<section class="group"><h2 data-en="Practice Questions" data-tr="Çalışma Soruları">Practice Questions</h2><div class="empty" data-en="Files in the practice questions folder can be linked here once their names are known." data-tr="Çalışma soruları klasöründeki dosyaların adları belirlendiğinde burada bağlantıları gösterilebilir.">Files in the practice questions folder can be linked here once their names are known.</div></section>
 <section class="group"><h2 data-en="Exams" data-tr="Sınavlar">Exams</h2><div class="empty" data-en="Exam files will be added here later." data-tr="Sınav dosyaları daha sonra buraya eklenecektir.">Exam files will be added here later.</div></section>
 <section class="group"><h2 data-en="Assignments" data-tr="Ödevler">Assignments</h2><div class="empty" data-en="Assignment files will be added here later." data-tr="Ödev dosyaları daha sonra buraya eklenecektir.">Assignment files will be added here later.</div></section>
 <section class="group"><h2 data-en="Announcements" data-tr="Duyurular">Announcements</h2><div class="empty" data-en="Course announcements will be added here when needed." data-tr="Ders duyuruları gerektiğinde buraya eklenecektir.">Course announcements will be added here when needed.</div></section>
@@ -70,7 +59,30 @@ function setLang(lang){
   localStorage.setItem('derya-lang',lang);
   document.querySelectorAll('[data-en][data-tr]').forEach(el=>{el.textContent=el.dataset[lang];});
 }
+// A week becomes downloadable automatically when its .m file is uploaded.
+// Do not infer availability from a 200 response to a missing-file fallback page.
+async function populateWeeks(){
+  const container = document.getElementById('weekly-files');
+  const weeks = Array.from({length:13},(_,i)=>i+1);
+  await Promise.all(weeks.map(async week=>{
+    const url = `./week${week}.m`;
+    let available = false;
+    try {
+      const response = await fetch(url, {method:'HEAD', cache:'no-store'});
+      const type = (response.headers.get('content-type')||'').toLowerCase();
+      available = response.ok && !type.includes('text/html');
+    } catch (_) { /* Leave as coming soon when offline. */ }
+    const el = document.createElement(available?'a':'div');
+    el.className = 'filelink' + (available?'':' pending');
+    if (available) {el.href=url; el.setAttribute('download',`week${week}.m`);}
+    el.innerHTML = `<span class="label" data-en="Week ${week}" data-tr="Hafta ${week}">Week ${week}</span><span class="${available?'pdf':'pending-label'}" data-en="${available?'Download .m':'Coming soon'}" data-tr="${available?'.m İndir':'Hazırlanıyor'}">${available?'Download .m':'Coming soon'}</span>`;
+    el.dataset.week=String(week);
+    return el;
+  })).then(elements=>elements.forEach(el=>container.appendChild(el)));
+  setLang(localStorage.getItem('derya-lang')||'tr');
+}
 setLang(localStorage.getItem('derya-lang')||'tr');
+populateWeeks();
 </script>
 </body>
 </html>
