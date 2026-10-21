@@ -1,3 +1,4 @@
+
 {
   "name": "deryaaltintan-website",
   "main": "./worker/index.js",
@@ -9,6 +10,7 @@
       "/materials/mat123/*",
       "/materials/mat124/*",
       "/materials/diff/*",
+      "/materials/mtk477/*",
       "/__course_login"
     ]
   }
