@@ -1,6 +1,6 @@
-.git
-.git/**
-.wrangler
-.wrangler/**
-.DS_Store
+**/.git
+**/.git/**
+**/.wrangler
+**/.wrangler/**
 **/.DS_Store
+**/node_modules
