@@ -1,0 +1,6 @@
+.git
+.git/**
+.wrangler
+.wrangler/**
+.DS_Store
+**/.DS_Store
