@@ -1,0 +1,156 @@
+% Plantilla simple para tareas de la Licenciatura en Física
+% Fer Flores - Universidad de Guadalajara - Noviembre 2023
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%-PREÁMBULO-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Paqueterías
+
+\documentclass{assignment}
+\usepackage[pdftex]{graphicx} 
+\usepackage{xcolor}
+\definecolor{LightGray}{gray}{0.95}
+\usepackage{fancyvrb, minted} 
+\usepackage[letterpaper, margin = 2.5cm]{geometry} 
+\usepackage[T1]{fontenc} 
+\usepackage[turkish]{babel} 
+\usepackage{amsmath, amsfonts, amssymb} 
+
+%-----------------------------------------ETIQUETAS--------------------------------------------
+
+\student{Derya Altıntan}                            
+
+
+\courselabel{MTK-477 Matlab ile Programlama}          
+\exercisesheet{MTK-477 Matlab ile Programlama}{Çalışma Soruları}
+\semester{Güz}
+\date{Aralık, 2023}
+\school{Matematik Bölümü }          
+\university{Hacettepe Üniversitesi}         
+
+
+\begin{document}
+
+%-----------------------------------------------------------------------------------------------
+\begin{enumerate}
+\item Verilen bir \(k \) sayısı ve \(f(x),g(x)\) fonksiyonları icin \(1.\) sütunu \( A(i,1)=f(i)\), \(2.\) sütunu \( A(i,2)=g(i),\: i=1,2,...,k \) 
+olan A matrisini oluşturan programı yazınız. \(f(x)=x^2, \: g(x)=x^3,\: k=3 \) için \(A\) matrisini elde ediniz. 
+\newline 
+\newline 
+\textbf{Cevap:} \(A=[1 1; 4 8; 9 27]\) \\
+\item 
+\(f(x)= \begin{cases} x+2, & x<-2 \\ -|x|+5, & 2 \leq x <3 \\ x-4, & x \geq 3\end{cases} \) fonksiyonunu 
+\begin{itemize}
+\item if komutu kullanarak
+\item  switch komutu kullanarak 
+\end{itemize}
+yazınız. \(f(10)\) değerini elde ediniz. 
+\newline 
+\newline 
+\textbf{Cevap:} \(6\) \\
+\item  Verilen iki vektör \(A\), \(B\) için önce vektörlerin boyunu kıyaslayan, boyları eşitse
+ ve \(k\) kadarsa \(2\) satırlı \(k\) sütunlu bir \(C\) matrisi oluşturan programı yazınız.
+ Ardından verilen bir \(F(x)\) fonksiyonu için \(C\) matrisinin \(1.\) satır elemanlarını \(C(1,j)=(F(A(j)))^{2}\), \(2.\) satır elemanlarını ise 
+\(C(2,j)=1/F(B(j))\) olarak oluşturunuz. \(F(x)= 1/x,\: A=[1\:  2 \: 3], \:B=[4 \:\: 5 \:\: 7 ]\)
+olmak üzere \(C\) matrisini oluşturunuz.
+ \newline 
+ \newline 
+\textbf{Cevap:} \(C=[1 \:\: 1/4 \:\: 1/9; 4 \:\: 5 \:\: 7]\) \\
+
+\item Verilen \(R xC\) boyutlu herhangi bir  A matrisi için \(A(i,j),\: i=1,2,... ,R,\: i=1,2,... ,C\)  bileşeni \(A(i,j)>0\) ise \(C(i,j)=1\); 
+\(A(i,j)<0\) ise \(C(i,j)=-1\); 
+\(A(i,j)=0\) ise \(C(i,j)=0\) şeklinde \(C\) matrisini oluşturan  algoritmayı yazınız. 
+\(A=[1 \:\: -20 ; 3 \:\: 4; 0 \:\: 98; -56 \:\:  78]\) icin cevabı elde ediniz. 
+ \newline 
+ \newline 
+\textbf{Cevap:} \(C=[1 \:\: -1; 1 \:\: 1; 0 \:\: 1; -1 \:\: 1]\)\\
+
+\item  Kenarı \(j=1,2,...,x\) şeklindeki karelerin alanlarını bulan ve bu alanları bir vektörün bileşenleri olarak yazan programı 
+\begin{itemize}
+    \item while  kullanarak yazınız.
+     \item if  kullanarak yazınız.
+\end{itemize}
+x=7 için cevabı elde ediniz. 
+ \newline 
+ \newline 
+\textbf{Cevap:} \(A=[1 \:\: 4 \:\: 9 \:\: 16 \:\: 25 \:\: 36 \:\: 49 ]\)\\
+
+\item  Verilen \(A,B\) vektörleri için  \(A\) ve \(B\)'nin boylarını karşılaştırarak \(C\) vektörünü oluşturan fonksiyonu  yazmak istiyoruz. 
+Buna göre,  eğer \(A\) ile \(B\)'nin boyları eşit ve \(k\) ie \(C\) vektörünün boyu da \(k\)'ya eşittir. Ayrıca \(A(j)\) tek, \(B(j)\) çift ise \(C(j)=A(j)*B(j)\)
+, \(A(j)\) çift, \(B(j)\) tek  ise \(C(j)=A(j)/B(j)\) şeklindedir. Eğer \(A\)'nın boyu
+\(B\)'den büyükse \(C=A\), değilse \(C=B\) şeklindedir. Bu programı  
+\begin{itemize}
+    \item switch kullanarak yazınız.
+     \item if kullanarak yazınız.
+\end{itemize}
+Bu program \(A=[1 \:\: 2 \:\: 5],\:B=[6 \:\: 7 \:\: 9]\)
+için \(C\)'yi ne verir ? 
+ \newline 
+ \newline 
+\textbf{Cevap:}\(C=[1/6 \:\: 14 \: \:5/9]\)
+
+\item Kullanıcıdan \(10\)'dan küçük  bir \(a\) sayısı girmesini isteyen, verilen sayıyı birer arttırarak değeri \(20\) den küçük, \(15\)'den büyük olduğu sürece ekrana yazdıran programı oluşturunuz. Programın çıktısını elde ediniz. \\
+
+
+\item Bir sayı dizisi için \(X(1)=X1\), \(X(2)=X2\) ve \(K\) aşağıdaki şeklinde belirlenmiştir. Bu
+durumda verilen bir \(F(x,y)\) fonksiyonu için \(X(k+1)=F(X(k),X(k-1))\) olan
+fonksiyonu \(|X(k+1)+X(k)|<K\) oldugu sürece elde ediniz. 
+\(X1=1,\:X2=2,\:K=50,\: F(x,y)=x+y\) olmak
+uzere \(X\) vektörünü elde ediniz. 
+ \newline 
+ \newline 
+\textbf{Cevap:} \(X=[1 \:\: 2 \:\: 3 \:\: 5 \:\: 8 \:\: 13 \:\:21 \:\:34]\) \\
+
+\item Verilen herhangi bir \(A\) matrisinin tüm elemanlarını toplayan bir algoritma oluşturunuz? 
+\(A=[1 \:\: 2 \:\: 3; 4 \:\: 5 \:\: 6 ; 7 \:\: 8 \:\:9]\) matrisi icin cevabı  elde ediniz.
+\newline 
+ \newline 
+\textbf{Cevap:} \(45\) \\
+
+\item  Verilen bir \(A\) matrisi ve \(n\) sayısı için \(n.\) satırdaki elemanların birbiriyle çarpımını bulan algoritmayı yazınız.  
+ Kullanıcı eğer \(A\) matrisinin satır sayısından  daha büyük bir \(n\) sayısı verdiyse  kullanıcıyı uyarınız.  \(A=[1 \: 2 \: 3; 4 \: 5 \:6 ; 7 \:8 \:9],\: n=3\) icin cevabı  elde ediniz.
+ \newline 
+ \newline 
+\textbf{Cevap:} \(504\) \\
+
+\item Şubatın \(29\) gün cektigi,  dolayısıyla  \(365\) yerine \(366\) gün ceken yıllara artık yıl adı verilir. Bir yılın artık olup olmadığını bulmak için iki yol izlenir.  Verilen bir yıl için, eğer yıl \(4\)'e
+bölünüyor fakat \(100\)'e bölünmüyorsa artık yıldır, \(400\)'e bölünüyorsa artık yıldır. Bu bilgileri kullanarak verilen bir yılın artık yıl olup olmadığını belirleyen programı yazınız. 
+Kullanıcıya  yılın artık olup olmadığını söyleyiniz. 1980 ve 2024 yılları artık yıl mıdır ? İnceleyiniz.
+ \newline 
+ \newline 
+\textbf{Cevap:} \(1975\) artık yıl değil, \(2024\) artik yıl. \\
+\item Verilen bir alt sınır, üst sınır  ve \(h\) sayıları için 
+\(a=altsinir:h:ustsinir\)
+\(b(a)=3*a^2+3*a-5\),  \(c(a)=1.2*a^2+4*a-3\) olmak üzere \(a,b,c\) vektörlerini elde ediniz ve \((a,b)\), \((a,c)\) ikililerini üst üste çiziniz
+\(altsinir=0,\: ustsinir=5,\: h=0.5\) olmak üzere çizimleri elde ediniz.
+ 
+\item \(y=f(u)= \begin{cases} u+3, & u<-1 \\ 4u-1, & -1 \leq x \leq 3 \\
+1-u, & u> 3\end{cases} \)
+olarak tanımlanıyor. \(g\) fonksiyonu ise
+
+ \(z=g(x)= \begin{cases} 2-x, & u \leq 2 \\ 2x-3, & x>2 \\\end{cases} \)
+şeklinde tanımlıdır. 
+Bu  durumda \(fog(x)\) fonksiyonunun sonucunu hesaplayan algoritmayı yazınız ve \((fog)(0) \) değerini hesaplayınız. 
+ \newline 
+ \newline 
+\textbf{Cevap:} \(7\)
+\item Verilen bir \(n\) sayısı için  \(n<10\) ise verilen sayı ile \(20\) arasındaki
+sayıları toplayan, verilen sayı \(10\) ile \(20 \: (20 \mbox{dahil})\) arasında ise \(n\) ile \(20\)
+arasındaki sayıların carpımını elde eden, verilen sayı \(20\)'den büyükse
+sayının kendisini veren algoritmayı sadece switch, while, if  döngüleri  kullanarak
+yazınız \(n=9\) \(n=11\) ve \(n=25\) için sonuçları elde ediniz. 
+\newline 
+ \newline 
+\textbf{Cevap:} \(n=9\) için \(154\), \(n=11\) için  \(6.0340e+13\), \(n=25\) için \(25\).
+
+\item Sembolik değişken kullanarak \(\lim_{x \rightarrow \infty} (\sqrt{x^2-4x}-\sqrt{x^2+4x})\)
+ limitini hesaplayınız. 
+
+
+
+
+
+
+\end{enumerate}
+
+
+\end{document}
