@@ -27,6 +27,18 @@ h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.1rem,5vw,4rem);
 .notice{margin-top:22px;color:#a9c2df;font-size:.92rem}
 @media(max-width:760px){.grid{grid-template-columns:1fr}.wrap{padding:26px 16px 50px}.hero{padding:25px 20px;border-radius:22px}}
 .pending{cursor:default;opacity:.78}.pending-label{color:var(--muted);font-size:.85rem;font-weight:700;white-space:nowrap}
+
+/* Collapsible practice folder; existing download links remain unchanged. */
+.practice-folder{border:1px solid rgba(112,186,235,.30);border-radius:14px;background:rgba(25,67,104,.72);overflow:hidden}
+.practice-folder>summary{display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;padding:16px 17px;font-weight:800;list-style:none;user-select:none}
+.practice-folder>summary::-webkit-details-marker{display:none}
+.practice-folder>summary:hover{background:rgba(31,79,119,.92)}
+.folder-title{display:flex;align-items:center;gap:11px}
+.folder-icon{font-size:1.3rem}
+.folder-chevron{font-size:1.35rem;color:var(--cyan);transition:transform .18s ease}
+.practice-folder[open] .folder-chevron{transform:rotate(180deg)}
+.practice-folder #practice-files{padding:0 12px 12px}
+.practice-folder .filelink{margin:7px 0}
 </style>
 </head>
 <body>
@@ -43,7 +55,11 @@ data-tr="Bu dersin tüm korumalı materyalleri bu sayfada toplanmıştır. Açı
 </header>
 <main class="grid">
 <section class="group"><h2 data-en="Lecture Notes" data-tr="Ders Notları">Lecture Notes</h2><div id="weekly-files" aria-live="polite"></div></section>
-<section class="group"><h2 data-en="Practice Questions" data-tr="Çalışma Soruları">Practice Questions</h2><div id="practice-files" aria-live="polite"><div class="empty" data-en="Loading files…" data-tr="Dosyalar yükleniyor…">Loading files…</div></div></section>
+<section class="group"><h2 data-en="Practice Questions" data-tr="Çalışma Soruları">Practice Questions</h2>
+<details class="practice-folder">
+<summary><span class="folder-title"><span class="folder-icon" aria-hidden="true">📁</span><span data-en="MATLAB Practice Files" data-tr="MATLAB Çalışma Dosyaları">MATLAB Practice Files</span></span><span class="folder-chevron" aria-hidden="true">⌄</span></summary>
+<div id="practice-files" aria-live="polite"><div class="empty" data-en="Loading files…" data-tr="Dosyalar yükleniyor…">Loading files…</div></div>
+</details></section>
 <section class="group"><h2 data-en="Exams" data-tr="Sınavlar">Exams</h2><div class="empty" data-en="Exam files will be added here later." data-tr="Sınav dosyaları daha sonra buraya eklenecektir.">Exam files will be added here later.</div></section>
 <section class="group"><h2 data-en="Assignments" data-tr="Ödevler">Assignments</h2><div class="empty" data-en="Assignment files will be added here later." data-tr="Ödev dosyaları daha sonra buraya eklenecektir.">Assignment files will be added here later.</div></section>
 <section class="group"><h2 data-en="Announcements" data-tr="Duyurular">Announcements</h2><div class="empty" data-en="Course announcements will be added here when needed." data-tr="Ders duyuruları gerektiğinde buraya eklenecektir.">Course announcements will be added here when needed.</div></section>
@@ -76,56 +92,45 @@ async function populateWeeks(){
   })).then(elements=>elements.forEach(el=>container.appendChild(el)));
   setLang(localStorage.getItem('derya-lang')||'tr');
 }
-// Automatically list practice materials from the GitHub repository.
-// File downloads use the existing password-protected site URLs.
+// List the actual files from the public GitHub repository, so new practice files appear automatically.
+// File downloads still go through the password-protected Cloudflare Worker route.
 async function populatePractice(){
   const container = document.getElementById('practice-files');
-  const root = 'https://api.github.com/repos/deryaaltintan/deryaaltintan-website/contents/materials/mtk477/';
-  // Support the common spellings of the folder without renaming user files.
-  const folders = ['calisma_sorulari', 'calisma_soruları', 'calisma soruları', 'calisma sorulari'];
-  let found = null;
-  for (const folder of folders){
-    try {
-      const response = await fetch(root + encodeURIComponent(folder) + '?ref=main', {
-        headers: {'Accept':'application/vnd.github+json'}, cache:'no-store'
+  const api = 'https://api.github.com/repos/deryaaltintan/deryaaltintan-website/contents/materials/mtk477/calisma_sorulari?ref=main';
+  try {
+    const response = await fetch(api, {headers:{'Accept':'application/vnd.github+json'},cache:'no-store'});
+    if (!response.ok) throw new Error('GitHub listing unavailable');
+    const items = await response.json();
+    if (!Array.isArray(items)) throw new Error('Unexpected response');
+    const files = items.filter(item=>item.type==='file' && /\.(m|pdf|tex)$/i.test(item.name))
+      .sort((a,b)=>{
+        const extA=a.name.split('.').pop().toLowerCase(), extB=b.name.split('.').pop().toLowerCase();
+        const priority={pdf:0,m:1,tex:2};
+        return (priority[extA]-priority[extB]) || a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'});
       });
-      if (!response.ok) continue;
-      const items = await response.json();
-      if (Array.isArray(items)) { found = {folder, items}; break; }
-    } catch (_) { /* Try the next folder spelling. */ }
-  }
-  container.replaceChildren();
-  if (!found){
-    const note = document.createElement('div');
-    note.className = 'empty';
-    note.dataset.en = 'The practice file list is unavailable. Please try again later.';
-    note.dataset.tr = 'Çalışma soruları listesi yüklenemedi. Lütfen daha sonra tekrar deneyin.';
-    container.appendChild(note);
-  } else {
-    const files = found.items
-      .filter(item => item.type === 'file' && /\.(m|pdf|tex)$/i.test(item.name))
-      .sort((a,b) => a.name.localeCompare(b.name, undefined, {numeric:true, sensitivity:'base'}));
-    if (!files.length){
-      const note = document.createElement('div');
-      note.className = 'empty';
-      note.dataset.en = 'No practice files have been added yet.';
-      note.dataset.tr = 'Henüz çalışma sorusu dosyası eklenmedi.';
-      container.appendChild(note);
-    }
+    container.replaceChildren();
+    if (!files.length) throw new Error('No practice files found');
     for (const file of files){
-      const link = document.createElement('a');
-      link.className = 'filelink';
-      link.href = './' + encodeURIComponent(found.folder) + '/' + encodeURIComponent(file.name);
-      link.setAttribute('download', file.name);
-      const name = document.createElement('span');
-      name.textContent = file.name;
-      name.style.overflowWrap = 'anywhere';
-      const ext = document.createElement('span');
-      ext.className = 'pdf';
-      ext.textContent = file.name.split('.').pop().toUpperCase() + ' ↓';
-      link.append(name,ext);
-      container.appendChild(link);
+      const a=document.createElement('a');
+      a.className='filelink';
+      a.href='./calisma_sorulari/'+encodeURIComponent(file.name);
+      a.setAttribute('download',file.name);
+      const name=document.createElement('span');
+      name.textContent=file.name;
+      name.style.overflowWrap='anywhere';
+      const type=document.createElement('span');
+      type.className='pdf';
+      type.textContent=file.name.split('.').pop().toUpperCase()+' ↓';
+      a.append(name,type);
+      container.appendChild(a);
     }
+  } catch (error){
+    container.replaceChildren();
+    const note=document.createElement('div');
+    note.className='empty';
+    note.dataset.en='The file list could not be loaded. Please refresh this page.';
+    note.dataset.tr='Dosya listesi yüklenemedi. Lütfen sayfayı yenileyin.';
+    container.appendChild(note);
   }
   setLang(localStorage.getItem('derya-lang')||'tr');
 }
