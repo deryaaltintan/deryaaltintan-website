@@ -26,6 +26,14 @@ h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.1rem,5vw,4rem);
 .empty{color:var(--muted);padding:12px 2px;line-height:1.5}
 .notice{margin-top:22px;color:#a9c2df;font-size:.92rem}
 @media(max-width:760px){.grid{grid-template-columns:1fr}.wrap{padding:26px 16px 50px}.hero{padding:25px 20px;border-radius:22px}}
+.exam-folder{border:1px solid rgba(112,186,235,.28);border-radius:13px;background:rgba(25,67,104,.72);overflow:hidden}
+.exam-folder summary{list-style:none;cursor:pointer;padding:15px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:750}
+.exam-folder summary::-webkit-details-marker{display:none}
+.exam-folder summary:hover{background:rgba(31,79,119,.92)}
+.folder-arrow{font-size:22px;color:var(--cyan);transition:transform .2s}
+.exam-folder[open] .folder-arrow{transform:rotate(180deg)}
+#previous-exams-files{padding:0 12px 12px}
+#previous-exams-files .filelink{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
@@ -55,7 +63,8 @@ data-tr="Bu dersin tüm korumalı materyalleri bu sayfada toplanmıştır. Açı
 <span class="label" data-en="Week 11" data-tr="Hafta 11">Week 11</span><span class="pdf">PDF ↗</span></a><a class="filelink" href="week_12.pdf" target="_blank" rel="noopener">
 <span class="label" data-en="Week 12" data-tr="Hafta 12">Week 12</span><span class="pdf">PDF ↗</span></a><a class="filelink" href="week_13.pdf" target="_blank" rel="noopener">
 <span class="label" data-en="Week 13" data-tr="Hafta 13">Week 13</span><span class="pdf">PDF ↗</span></a></section><section class="group"><h2 data-en="Additional Materials" data-tr="Ek Materyaller">Additional Materials</h2><a class="filelink" href="laplace_transform_table.pdf" target="_blank" rel="noopener">
-<span class="label" data-en="Laplace Transform Table" data-tr="Laplace Dönüşüm Tablosu">Laplace Transform Table</span><span class="pdf">PDF ↗</span></a></section><section class="group"><h2 data-en="Exams" data-tr="Sınavlar">Exams</h2><div class="empty" data-en="Exam files will be added here later." data-tr="Sınav dosyaları daha sonra buraya eklenecektir.">Exam files will be added here later.</div></section><section class="group"><h2 data-en="Assignments" data-tr="Ödevler">Assignments</h2><div class="empty" data-en="Assignment files will be added here later." data-tr="Ödev dosyaları daha sonra buraya eklenecektir.">Assignment files will be added here later.</div></section><section class="group"><h2 data-en="Announcements" data-tr="Duyurular">Announcements</h2><div class="empty" data-en="Course announcements will be added here when needed." data-tr="Ders duyuruları gerektiğinde buraya eklenecektir.">Course announcements will be added here when needed.</div></section>
+<span class="label" data-en="Laplace Transform Table" data-tr="Laplace Dönüşüm Tablosu">Laplace Transform Table</span><span class="pdf">PDF ↗</span></a></section><section class="group"><h2 data-en="Exams" data-tr="Sınavlar">Exams</h2>
+<details class="exam-folder"><summary><span data-en="📁 Previous Exams" data-tr="📁 Önceki Sınavlar">📁 Previous Exams</span><span class="folder-arrow">⌄</span></summary><div id="previous-exams-files" aria-live="polite"><div class="empty" data-en="Loading files…" data-tr="Dosyalar yükleniyor…">Loading files…</div></div></details></section><section class="group"><h2 data-en="Assignments" data-tr="Ödevler">Assignments</h2><div class="empty" data-en="Assignment files will be added here later." data-tr="Ödev dosyaları daha sonra buraya eklenecektir.">Assignment files will be added here later.</div></section><section class="group"><h2 data-en="Announcements" data-tr="Duyurular">Announcements</h2><div class="empty" data-en="Course announcements will be added here when needed." data-tr="Ders duyuruları gerektiğinde buraya eklenecektir.">Course announcements will be added here when needed.</div></section>
 </main>
 <div class="notice" data-en="This page and the files linked from it are protected by the course password."
 data-tr="Bu sayfa ve buradan açılan dosyalar ders şifresiyle korunmaktadır.">This page and the files linked from it are protected by the course password.</div>
@@ -66,7 +75,41 @@ function setLang(lang){
   localStorage.setItem('derya-lang',lang);
   document.querySelectorAll('[data-en][data-tr]').forEach(el=>{el.textContent=el.dataset[lang];});
 }
+
+async function populatePreviousExams(){
+  const container=document.getElementById('previous-exams-files');
+  const api='https://api.github.com/repos/deryaaltintan/deryaaltintan-website/contents/materials/diff/previous_exams?ref=main';
+  try{
+    const response=await fetch(api,{headers:{Accept:'application/vnd.github+json'},cache:'no-store'});
+    if(response.status===404){
+      showExamNote('No previous exams have been uploaded yet.','Henüz eski sınav yüklenmedi.');return;
+    }
+    if(!response.ok)throw new Error('Listing unavailable');
+    const items=await response.json();
+    if(!Array.isArray(items))throw new Error('Invalid listing');
+    const files=items.filter(f=>f.type==='file' && /\.(pdf|docx?|png|jpe?g)$/i.test(f.name))
+      .sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'}));
+    if(!files.length){showExamNote('No previous exams have been uploaded yet.','Henüz eski sınav yüklenmedi.');return;}
+    container.replaceChildren();
+    for(const file of files){
+      const link=document.createElement('a');link.className='filelink';
+      link.href='./previous_exams/'+encodeURIComponent(file.name);
+      link.target='_blank';link.rel='noopener';
+      const name=document.createElement('span');name.textContent=file.name;
+      const ext=document.createElement('span');ext.className='pdf';ext.textContent=file.name.split('.').pop().toUpperCase()+' ↗';
+      link.append(name,ext);container.appendChild(link);
+    }
+  }catch(_){showExamNote('Exam list could not be loaded. Please refresh the page.','Sınav listesi yüklenemedi. Lütfen sayfayı yenileyin.');}
+  setLang(localStorage.getItem('derya-lang')||'tr');
+}
+function showExamNote(en,tr){
+ const container=document.getElementById('previous-exams-files');
+ const note=document.createElement('div');note.className='empty';note.dataset.en=en;note.dataset.tr=tr;
+ container.replaceChildren(note);
+ setLang(localStorage.getItem('derya-lang')||'tr');
+}
 setLang(localStorage.getItem('derya-lang')||'tr');
+populatePreviousExams();
 </script>
 </body>
 </html>
