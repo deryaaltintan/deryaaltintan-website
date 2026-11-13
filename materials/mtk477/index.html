@@ -37,7 +37,7 @@ h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.1rem,5vw,4rem);
 .folder-icon{font-size:1.3rem}
 .folder-chevron{font-size:1.35rem;color:var(--cyan);transition:transform .18s ease}
 .practice-folder[open] .folder-chevron{transform:rotate(180deg)}
-.practice-folder #practice-files{padding:0 12px 12px}
+.practice-folder #practice-files,.practice-folder #old-notes-files{padding:0 12px 12px}
 .practice-folder .filelink{margin:7px 0}
 </style>
 </head>
@@ -59,6 +59,11 @@ data-tr="Bu dersin tüm korumalı materyalleri bu sayfada toplanmıştır. Açı
 <details class="practice-folder">
 <summary><span class="folder-title"><span class="folder-icon" aria-hidden="true">📁</span><span data-en="MATLAB Practice Files" data-tr="MATLAB Çalışma Dosyaları">MATLAB Practice Files</span></span><span class="folder-chevron" aria-hidden="true">⌄</span></summary>
 <div id="practice-files" aria-live="polite"><div class="empty" data-en="Loading files…" data-tr="Dosyalar yükleniyor…">Loading files…</div></div>
+</details></section>
+<section class="group"><h2 data-en="Previous Lecture Notes" data-tr="Eski Ders Notları">Previous Lecture Notes</h2>
+<details class="practice-folder">
+<summary><span class="folder-title"><span class="folder-icon" aria-hidden="true">📁</span><span data-en="Previous Lecture Notes (PDF)" data-tr="Eski Ders Notları (PDF)">Previous Lecture Notes (PDF)</span></span><span class="folder-chevron" aria-hidden="true">⌄</span></summary>
+<div id="old-notes-files" aria-live="polite"><div class="empty" data-en="Loading files…" data-tr="Dosyalar yükleniyor…">Loading files…</div></div>
 </details></section>
 <section class="group"><h2 data-en="Exams" data-tr="Sınavlar">Exams</h2><div class="empty" data-en="Exam files will be added here later." data-tr="Sınav dosyaları daha sonra buraya eklenecektir.">Exam files will be added here later.</div></section>
 <section class="group"><h2 data-en="Assignments" data-tr="Ödevler">Assignments</h2><div class="empty" data-en="Assignment files will be added here later." data-tr="Ödev dosyaları daha sonra buraya eklenecektir.">Assignment files will be added here later.</div></section>
@@ -134,9 +139,56 @@ async function populatePractice(){
   }
   setLang(localStorage.getItem('derya-lang')||'tr');
 }
+
+// Auto-list PDF files from the existing previous lecture notes directory.
+async function populateOldNotes(){
+  const container = document.getElementById('old-notes-files');
+  const folders = ['eski_ders_notlari','eski_ders_notları'];
+  try {
+    let files, folder;
+    for (const candidate of folders){
+      const api = 'https://api.github.com/repos/deryaaltintan/deryaaltintan-website/contents/materials/mtk477/' + encodeURIComponent(candidate) + '?ref=main';
+      const response = await fetch(api,{headers:{'Accept':'application/vnd.github+json'},cache:'no-store'});
+      if (!response.ok) continue;
+      const items = await response.json();
+      if (!Array.isArray(items)) continue;
+      files = items.filter(item => item.type==='file' && /\.pdf$/i.test(item.name))
+        .sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'}));
+      folder = candidate;
+      break;
+    }
+    if (!files || !files.length) throw new Error('No PDF files found');
+    container.replaceChildren();
+    for (const file of files){
+      const a = document.createElement('a');
+      a.className = 'filelink';
+      a.href = './' + encodeURIComponent(folder) + '/' + encodeURIComponent(file.name);
+      a.target = '_blank';
+      a.rel = 'noopener';
+      const name = document.createElement('span');
+      name.textContent = file.name;
+      name.style.overflowWrap = 'anywhere';
+      const type = document.createElement('span');
+      type.className = 'pdf';
+      type.textContent = 'PDF ↗';
+      a.append(name,type);
+      container.appendChild(a);
+    }
+  } catch (error){
+    container.replaceChildren();
+    const note = document.createElement('div');
+    note.className = 'empty';
+    note.dataset.en = 'No PDF files found or the file list could not be loaded.';
+    note.dataset.tr = 'PDF dosyası bulunamadı veya dosya listesi yüklenemedi.';
+    container.appendChild(note);
+  }
+  setLang(localStorage.getItem('derya-lang')||'tr');
+}
+
 setLang(localStorage.getItem('derya-lang')||'tr');
 populateWeeks();
 populatePractice();
+populateOldNotes();
 </script>
 </body>
 </html>
