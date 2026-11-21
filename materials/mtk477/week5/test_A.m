@@ -1,0 +1,11 @@
+function test_A
+A=[1 23 25 -100 67 -3 65];
+%disp('If ile olan break file')
+%matrix_numaber(A)
+%disp('while ile olan braek file')
+%matrix_numaber_while(A)
+%disp('If ile olan continue file')
+%matrix_numaber_cont_if(A)
+disp('While ile olan continue file')
+matrix_numaber_cont_while(A)
+

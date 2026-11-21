@@ -37,7 +37,7 @@ h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.1rem,5vw,4rem);
 .folder-icon{font-size:1.3rem}
 .folder-chevron{font-size:1.35rem;color:var(--cyan);transition:transform .18s ease}
 .practice-folder[open] .folder-chevron{transform:rotate(180deg)}
-.practice-folder #practice-files,.practice-folder #old-notes-files{padding:0 12px 12px}
+.practice-folder #practice-files,.practice-folder #old-notes-files,.practice-folder .week-folder-files{padding:0 12px 12px}
 .practice-folder .filelink{margin:7px 0}
 </style>
 </head>
@@ -81,7 +81,8 @@ function setLang(lang){
 async function populateWeeks(){
   const container = document.getElementById('weekly-files');
   const weeks = Array.from({length:13},(_,i)=>i+1);
-  await Promise.all(weeks.map(async week=>{
+  const repoBase = 'https://api.github.com/repos/deryaaltintan/deryaaltintan-website/contents/materials/mtk477/';
+  const makeWeekLink = async (week) => {
     const url = `./week${week}.m`;
     let available = false;
     try {
@@ -94,9 +95,66 @@ async function populateWeeks(){
     if (available) {el.href=url; el.setAttribute('download',`week${week}.m`);}
     el.innerHTML = `<span class="label" data-en="Week ${week}" data-tr="Hafta ${week}">Week ${week}</span><span class="${available?'pdf':'pending-label'}" data-en="${available?'Download .m':'Coming soon'}" data-tr="${available?'.m İndir':'Hazırlanıyor'}">${available?'Download .m':'Coming soon'}</span>`;
     return el;
-  })).then(elements=>elements.forEach(el=>container.appendChild(el)));
+  };
+  const makeFolder = (week) => {
+    const details = document.createElement('details');
+    details.className = 'practice-folder';
+    details.style.margin = '8px 0';
+    const summary = document.createElement('summary');
+    summary.innerHTML = `<span class="folder-title"><span class="folder-icon" aria-hidden="true">📁</span><span data-en="Week ${week}" data-tr="Hafta ${week}">Week ${week}</span></span><span class="folder-chevron" aria-hidden="true">⌄</span>`;
+    const filesBox = document.createElement('div');
+    filesBox.className = 'week-folder-files';
+    const loading = document.createElement('div');
+    loading.className = 'empty';
+    loading.dataset.en = 'Open the folder to load files.';
+    loading.dataset.tr = 'Dosyaları yüklemek için klasörü açın.';
+    filesBox.appendChild(loading);
+    details.append(summary,filesBox);
+    details.addEventListener('toggle', async () => {
+      if (!details.open || details.dataset.loaded === 'true') return;
+      details.dataset.loaded = 'true';
+      const folder = `week${week}`;
+      try {
+        const response = await fetch(repoBase + folder + '?ref=main', {headers:{Accept:'application/vnd.github+json'},cache:'no-store'});
+        if (!response.ok) throw new Error('Folder not found');
+        const items = await response.json();
+        if (!Array.isArray(items)) throw new Error('Invalid folder listing');
+        const files = items.filter(item => item.type === 'file' && /\.(m|mlx|pdf)$/i.test(item.name))
+          .sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true,sensitivity:'base'}));
+        filesBox.replaceChildren();
+        if (!files.length) throw new Error('No files');
+        for (const file of files) {
+          const a = document.createElement('a');
+          a.className = 'filelink';
+          a.href = './' + folder + '/' + encodeURIComponent(file.name);
+          a.setAttribute('download',file.name);
+          const name = document.createElement('span');
+          name.textContent = file.name;
+          name.style.overflowWrap = 'anywhere';
+          const ext = document.createElement('span');
+          ext.className = 'pdf';
+          ext.textContent = file.name.split('.').pop().toUpperCase() + ' ↓';
+          a.append(name,ext);
+          filesBox.appendChild(a);
+        }
+      } catch (_) {
+        filesBox.replaceChildren();
+        const note = document.createElement('div');
+        note.className = 'empty';
+        note.dataset.en = 'No files found or the folder could not be loaded.';
+        note.dataset.tr = 'Dosya bulunamadı veya klasör yüklenemedi.';
+        filesBox.appendChild(note);
+        details.dataset.loaded = 'false';
+      }
+      setLang(localStorage.getItem('derya-lang')||'tr');
+    });
+    return details;
+  };
+  const elements = await Promise.all(weeks.map(week => [4,5].includes(week) ? makeFolder(week) : makeWeekLink(week)));
+  container.replaceChildren(...elements);
   setLang(localStorage.getItem('derya-lang')||'tr');
 }
+
 // List the actual files from the public GitHub repository, so new practice files appear automatically.
 // File downloads still go through the password-protected Cloudflare Worker route.
 async function populatePractice(){
